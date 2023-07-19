@@ -59,7 +59,11 @@
 <audio data-key="KeyL" src="sounds/tink.wav"></audio>
 
 <script>
-    window.addEventListener("keydown", function (e) {
+    window.addEventListener("keydown", playSound)
+    
+    const keys = document.querySelectorAll(".key");
+
+    function playSound(e) {
         if (e.repeat) return;
 
         // Get the audio element 
@@ -71,7 +75,7 @@
         // Animation for key on page
         const key = document.querySelector(`.key[data-key="${e.code}"]`);
         if(!key.classList.contains("playing")) key.classList.add("playing");
-        else key.classList.remove("playing")
+        else key.classList.remove("playing");
 
         // Uncomment to display keypress in console for debugging
         //console.log(audio + `\n${e.code}`);
@@ -81,16 +85,14 @@
         audio.currentTime = 0;
         audio.play();
 
-    })
-    
-    const keys = document.querySelectorAll(".key");
-    keys.forEach(key => key.addEventListener("transitionend", removeTransition))
-    
+    }
     function removeTransition(e) {
         console.log(e)
         if (e.propertyName !== "transform") return; 
         this.classList.remove("playing");
     }
+    
+    keys.forEach(key => key.addEventListener("transitionend", removeTransition))
 </script>
 
 
